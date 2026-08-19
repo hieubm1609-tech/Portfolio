@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bui Manh Hieu - B2B Marketing Executive</title>
+<meta name="description" content="Portfolio of Bui Manh Hieu, B2B Marketing Executive specializing in Account-Based Marketing and Demand Generation, based in Hanoi, Vietnam.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0e0e0e; --paper:#fff; --muted:#6d6d6d; --line:#e4e4e4; --soft:#f5f5f5; --grid:rgba(14,14,14,.045);
+    --spring:cubic-bezier(.16,1,.3,1);
+    --sidebar-w:300px;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Manrope',sans-serif;
+    color:var(--ink); background:var(--paper);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+    background-image:linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size:64px 64px;
+  }
+  h1,h2,h3,h4{font-family:'Lexend',sans-serif; font-weight:700; letter-spacing:-.02em; line-height:1.12}
+  a{color:inherit; text-decoration:none}
+  img{max-width:100%; display:block}
+  ul{list-style:none}
+  button{font-family:inherit; cursor:pointer; border:none; background:none; color:inherit}
+  p{line-height:1.65}
+
+  /* Curtain */
+  .curtain{position:fixed; inset:0; background:var(--ink); z-index:9999; transform-origin:bottom; transition:transform 1.1s var(--spring);}
+  .curtain.hide{transform:scaleY(0);}
+
+  /* Custom cursor */
+  .cursor-dot,.cursor-ring{position:fixed; top:0; left:0; border-radius:50%; pointer-events:none; z-index:9998; transform:translate(-50%,-50%);}
+  .cursor-dot{width:6px;height:6px;background:var(--ink);}
+  .cursor-ring{width:32px;height:32px;border:1px solid var(--ink); transition:width .3s var(--spring),height .3s var(--spring),opacity .3s;}
+  .cursor-ring.active{width:56px;height:56px; opacity:.5}
+  @media (pointer:fine){
+    body, a, button{cursor:none}
+  }
+  @media (pointer:coarse){
+    .cursor-dot,.cursor-ring{display:none}
+  }
+
+  /* Layout */
+  .sidebar{
+    width:var(--sidebar-w); flex-shrink:0; position:fixed; top:0; left:0; height:100vh;
+    border-right:1px solid var(--line); padding:40px 32px; display:flex; flex-direction:column;
+    background:var(--paper); z-index:500; overflow-y:auto;
+  }
+  .main{margin-left:var(--sidebar-w); min-width:0;}
+
+  .sidebar-top{display:flex; align-items:center; justify-content:space-between;}
+  .profile{display:flex; flex-direction:column; gap:14px;}
+  .avatar{width:84px;height:84px;border-radius:50%; object-fit:cover; border:1px solid var(--line);}
+  .profile h1{font-size:1.1rem;}
+  .profile p{color:var(--muted); font-size:.85rem;}
+
+  .sidebar-panel{display:flex; flex-direction:column; flex:1; justify-content:space-between; margin-top:40px;}
+
+  .nav{display:flex; flex-direction:column; gap:4px;}
+  .nav-link{padding:11px 14px; border-radius:8px; font-size:.92rem; font-weight:600; color:var(--muted); transition:background .3s var(--spring), color .3s var(--spring);}
+  .nav-link:hover{background:var(--soft); color:var(--ink);}
+  .nav-link.active{background:var(--ink); color:var(--paper);}
+
+  .sidebar-footer{display:flex; flex-direction:column; gap:12px; padding-top:28px; border-top:1px solid var(--line); margin-top:28px;}
+  .contact-link{display:flex; align-items:center; gap:10px; font-size:.82rem; color:var(--muted); transition:color .3s;}
+  .contact-link svg{width:15px;height:15px; flex-shrink:0;}
+  .contact-link:hover{color:var(--ink);}
+
+  .menu-toggle{display:none; width:26px;height:18px;position:relative;}
+  .menu-toggle span,.menu-toggle::before,.menu-toggle::after{content:'';position:absolute;left:0;width:100%;height:2px;background:var(--ink);transition:transform .3s var(--spring), opacity .3s;}
+  .menu-toggle::before{top:0;}
+  .menu-toggle span{top:8px;display:block;}
+  .menu-toggle::after{top:16px;}
+  .menu-toggle.open::before{transform:translateY(8px) rotate(45deg);}
+  .menu-toggle.open::after{transform:translateY(-8px) rotate(-45deg);}
+  .menu-toggle.open span{opacity:0;}
+
+  @media (max-width:900px){
+    .sidebar{position:sticky; height:auto; width:100%; padding:18px 20px; border-right:none; border-bottom:1px solid var(--line);}
+    .avatar{width:44px;height:44px;}
+    .profile{flex-direction:row; align-items:center;}
+    .profile p{display:none;}
+    .menu-toggle{display:block;}
+    .sidebar-panel{position:absolute; top:100%; left:0; right:0; background:var(--paper); border-bottom:1px solid var(--line);
+      max-height:0; overflow:hidden; margin-top:0; padding:0 20px; transition:max-height .4s var(--spring), padding .4s var(--spring);}
+    .sidebar-panel.open{max-height:70vh; padding:16px 20px 24px; overflow-y:auto;}
+    .main{margin-left:0;}
+  }
+
+  /* Sections */
+  .section{padding:96px 64px; max-width:980px;}
+  .section + .section{border-top:1px solid var(--line);}
+  @media (max-width:900px){.section{padding:56px 24px;}}
+
+  .eyebrow{font-size:.78rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin-bottom:18px; font-weight:700; display:flex; align-items:center; gap:9px;}
+  .eyebrow::before{content:''; width:7px; height:7px; background:var(--ink); flex-shrink:0; transform:rotate(45deg);}
+
+  .word-wrap{overflow:hidden; display:inline-block; vertical-align:top;}
+  .word{display:inline-block; opacity:0; transform:translateY(110%); transition:opacity .7s var(--spring), transform .7s var(--spring);}
+  .word.seen{opacity:1; transform:translateY(0);}
+
+  .reveal{opacity:0; transform:translateY(28px); transition:opacity .8s var(--spring), transform .8s var(--spring);}
+  .reveal.seen{opacity:1; transform:translateY(0);}
+
+  /* Hero */
+  .hero{min-height:88vh; display:grid; grid-template-columns:1.15fr .85fr; gap:56px; align-items:center; position:relative; overflow:hidden;}
+  .hero-deco-circle{position:absolute; border:1px solid var(--line); border-radius:50%; z-index:0; pointer-events:none;}
+  .hero-deco-circle.bold{border:2px solid var(--ink);}
+  .hero-deco-dot{position:absolute; border-radius:50%; background:var(--ink); z-index:0; pointer-events:none;}
+  .hero-deco-plus{position:absolute; z-index:0; pointer-events:none; color:var(--ink);}
+  .hero-text{position:relative; z-index:1;}
+  .hero h1{font-size:clamp(2.4rem,6vw,4.4rem); margin-bottom:24px; white-space:nowrap;}
+  .hero p.lead{font-size:1.15rem; color:var(--muted); max-width:560px; margin-bottom:24px;}
+  .hero-bio{font-size:.95rem; color:var(--muted); line-height:1.75; max-width:560px; margin-bottom:32px;}
+  .hero-photo-wrap{position:relative; z-index:1;}
+  .hero-photo-deco{position:absolute; inset:18px -18px -18px 18px; z-index:0; border-radius:24px;
+    background-image:radial-gradient(var(--muted) 1.5px, transparent 1.5px); background-size:20px 20px; opacity:.25;}
+  .hero-photo{position:relative; z-index:1; border-radius:24px; overflow:hidden; aspect-ratio:4/5; border:1px solid var(--line); background:var(--soft);}
+  .hero-photo img{width:100%; height:100%; object-fit:cover; object-position:center 15%;}
+  @media (max-width:900px){
+    .hero{grid-template-columns:1fr; gap:32px; min-height:auto; padding-top:24px;}
+    .hero-photo-wrap{order:-1; max-width:240px; margin:0 auto;}
+  }
+  .btn-row{display:flex; gap:16px; flex-wrap:wrap;}
+  .btn{display:inline-flex; align-items:center; gap:8px; padding:14px 26px; border-radius:999px; font-weight:700; font-size:.88rem; transition:transform .3s var(--spring), background .3s, border-color .3s;}
+  .btn-primary{background:var(--ink); color:var(--paper);}
+  .btn-primary:hover{transform:translateY(-3px);}
+  .btn-outline{border:1px solid var(--line); background:var(--paper);}
+  .btn-outline:hover{border-color:var(--ink); transform:translateY(-3px);}
+
+  h2{font-size:clamp(1.7rem,3vw,2.3rem); margin-bottom:24px; max-width:680px;}
+  .lead-text{color:var(--muted); font-size:1rem; max-width:620px; margin-bottom:8px;}
+
+  /* Stat strip */
+  .stat-strip{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:24px; margin-top:44px;}
+  .stat-strip .stat{border-top:2px solid var(--ink); padding-top:14px;}
+  .stat-num{font-family:'Lexend',sans-serif; font-weight:800; font-size:1.9rem;}
+  .stat-label{color:var(--muted); font-size:.8rem; margin-top:6px;}
+
+  /* Pills */
+  .pill-group{display:flex; flex-wrap:wrap; gap:10px; margin-top:22px;}
+  .pill{border:1px solid var(--line); border-radius:999px; padding:9px 18px; font-size:.83rem; font-weight:600; background:var(--paper); transition:background .3s,color .3s,border-color .3s;}
+  .pill:hover{background:var(--ink); color:var(--paper); border-color:var(--ink);}
+  .skill-block{margin-top:40px;}
+  .skill-block:first-of-type{margin-top:0;}
+  .skill-block h3{font-size:.95rem; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:.06em;}
+
+  /* Accordion */
+  .accordion{margin-top:20px; border-top:1px solid var(--line);}
+  .acc-item{border-bottom:1px solid var(--line);}
+  .acc-trigger{width:100%; display:flex; align-items:center; justify-content:space-between; gap:16px; padding:22px 2px; font-family:'Lexend',sans-serif; font-weight:700; font-size:1.05rem; text-align:left;}
+  .acc-trigger .acc-icon{width:18px;height:18px; flex-shrink:0; transition:transform .4s var(--spring);}
+  .acc-trigger[aria-expanded="true"] .acc-icon{transform:rotate(45deg);}
+  .acc-panel{max-height:0; overflow:hidden; transition:max-height .5s var(--spring);}
+  .acc-panel-inner{padding:0 2px 28px;}
+  .acc-group{margin-bottom:18px;}
+  .acc-group:last-child{margin-bottom:0;}
+  .acc-group-label{font-weight:700; font-size:.82rem; margin-bottom:8px;}
+  .acc-group-items{color:var(--muted); font-size:.9rem; line-height:1.7;}
+
+  /* Key highlights */
+  .highlight-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:24px; margin-top:44px;}
+  .highlight-card{border:1px solid var(--line); border-radius:18px; padding:28px; background:var(--paper); transition:transform .4s var(--spring), box-shadow .4s var(--spring);}
+  .highlight-card:hover{transform:translateY(-6px); box-shadow:0 22px 44px rgba(0,0,0,.08);}
+  .highlight-icon{width:40px;height:40px; border-radius:10px; background:var(--soft); display:flex; align-items:center; justify-content:center; margin-bottom:18px;}
+  .highlight-icon svg{width:20px;height:20px;}
+  .highlight-card h3{font-size:1.05rem; margin-bottom:14px;}
+  .highlight-card ul{display:flex; flex-direction:column; gap:8px;}
+  .highlight-card li{padding-left:18px; position:relative; font-size:.87rem; color:var(--muted); line-height:1.55;}
+  .highlight-card li::before{content:'';position:absolute;left:0;top:.6em;width:5px;height:5px;border-radius:50%;background:var(--ink);}
+  .highlight-card li b{color:var(--ink);}
+
+  /* Featured work preview cards */
+  .feature-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:24px; margin-top:44px;}
+  .feature-card{border:1px solid var(--line); border-radius:18px; padding:28px; background:var(--paper); transition:transform .4s var(--spring), box-shadow .4s var(--spring); display:flex; flex-direction:column; height:100%;}
+  .feature-card:hover{transform:translateY(-6px); box-shadow:0 22px 44px rgba(0,0,0,.08);}
+  .feature-tag{font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); font-weight:700; margin-bottom:14px;}
+  .feature-metric{font-family:'Lexend',sans-serif; font-size:2rem; font-weight:800; margin-bottom:10px;}
+  .feature-desc{color:var(--muted); font-size:.88rem; flex:1; margin-bottom:20px;}
+  .feature-link{font-weight:700; font-size:.85rem; display:inline-flex; align-items:center; gap:6px;}
+  .feature-link svg{width:14px;height:14px; transition:transform .3s var(--spring);}
+  .feature-card:hover .feature-link svg{transform:translate(3px,-3px);}
+
+  /* Media & Events gallery */
+  .event-gallery{display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:44px;}
+  .event-photo{display:block; border-radius:16px; overflow:hidden; border:1px solid var(--line); aspect-ratio:4/3;}
+  .event-photo img{width:100%; height:100%; object-fit:cover; transition:transform .6s var(--spring);}
+  .event-photo:hover img{transform:scale(1.06);}
+  @media (max-width:760px){
+    .event-gallery{grid-template-columns:1fr;}
+  }
+
+  /* Timeline */
+  .timeline{display:flex; flex-direction:column; margin-top:12px;}
+  .tl-item{padding:36px 0; border-top:1px solid var(--line);}
+  .tl-item:first-child{border-top:none; padding-top:8px;}
+  .tl-head{display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:8px; margin-bottom:6px;}
+  .tl-role{font-family:'Lexend',sans-serif; font-weight:700; font-size:1.12rem; display:flex; align-items:center; gap:12px;}
+  .tl-logo{width:30px;height:30px;object-fit:contain; border-radius:6px; border:1px solid var(--line); padding:3px; background:var(--paper);}
+  .tl-date{color:var(--muted); font-size:.82rem; font-weight:600; white-space:nowrap;}
+  .tl-company{color:var(--muted); font-size:.88rem; margin-bottom:18px;}
+  .tl-list{display:flex; flex-direction:column; gap:10px;}
+  .tl-list li{padding-left:20px; position:relative; font-size:.93rem; line-height:1.6;}
+  .tl-list li::before{content:'→'; position:absolute; left:0; color:var(--muted);}
+
+  /* Education */
+  .edu-card{border:1px solid var(--line); border-radius:18px; padding:32px; margin-top:20px; background:var(--paper);}
+  .edu-card h3{font-family:'Lexend',sans-serif; font-size:1.1rem; margin-bottom:6px;}
+  .edu-meta{color:var(--muted); font-size:.88rem; margin-bottom:18px;}
+  .doc-row{display:flex; gap:12px; flex-wrap:wrap;}
+  .doc-btn{display:inline-flex; align-items:center; gap:8px; border:1px solid var(--line); border-radius:999px; padding:10px 18px; font-size:.82rem; font-weight:700; background:var(--paper); transition:border-color .3s, transform .3s var(--spring);}
+  .doc-btn:hover{border-color:var(--ink); transform:translateY(-2px);}
+  .doc-btn svg{width:14px;height:14px;}
+  .academic-note{margin-top:24px; padding-top:24px; border-top:1px solid var(--line); font-size:.9rem; color:var(--muted);}
+  .academic-note strong{color:var(--ink);}
+
+  .note-box{border:1px dashed var(--line); border-radius:16px; padding:22px 24px; color:var(--muted); font-size:.85rem; font-style:italic; background:var(--soft); margin-top:24px;}
+
+  /* Footer / contact */
+  .footer-section{padding:96px 64px 56px;}
+  .footer-section h2{margin-bottom:8px;}
+  @media (max-width:900px){.footer-section{padding:56px 24px 32px;}}
+  .contact-grid{display:flex; flex-direction:column; gap:16px; margin-top:28px;}
+  .contact-row{display:flex; align-items:center; gap:14px; font-size:1.05rem; font-weight:600; padding-bottom:16px; border-bottom:1px solid var(--line); transition:color .3s;}
+  .contact-row svg{width:18px;height:18px;}
+  .contact-row:hover{color:var(--muted);}
+  .copyright{margin-top:60px; color:var(--muted); font-size:.8rem; text-align:center;}
+</style>
+</head>
+<body>
+
+<div class="curtain"></div>
+<div class="cursor-dot"></div>
+<div class="cursor-ring"></div>
+
+<aside class="sidebar">
+  <div class="sidebar-top">
+    <div class="profile">
+      <div>
+        <h1>Bui Manh Hieu</h1>
+        <p>B2B Marketing Executive</p>
+      </div>
+    </div>
+    <button class="menu-toggle" aria-label="Toggle menu"><span></span></button>
+  </div>
+  <div class="sidebar-panel">
+    <nav class="nav">
+      <a class="nav-link active" href="index.html">Home</a>
+      <a class="nav-link" href="media.html">Media</a>
+      <a class="nav-link" href="writing.html">Copywriting</a>
+    </nav>
+    <div class="sidebar-footer">
+      <a class="contact-link" href="mailto:hieubm1609@gmail.com">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M4 6l8 7 8-7"/></svg>
+        hieubm1609@gmail.com
+      </a>
+      <a class="contact-link" href="tel:+840918160902">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.7a2 2 0 0 1-.4 2.1L8 9.9a16 16 0 0 0 6 6l1.4-1.2a2 2 0 0 1 2.1-.4c.9.3 1.8.5 2.7.6a2 2 0 0 1 1.8 2z"/></svg>
+        (+84) 0918 160 902
+      </a>
+      <a class="contact-link" href="https://linkedin.com/in/hieu-bui1609" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/><path d="M10 9v12M10 13a4 4 0 0 1 8 0v8"/></svg>
+        linkedin.com/in/hieu-bui1609
+      </a>
+      <span class="contact-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Hanoi, Vietnam
+      </span>
+    </div>
+  </div>
+</aside>
+
+<main class="main">
+
+  <section class="section hero">
+    <div class="hero-deco-circle" style="width:320px;height:320px;top:-110px;right:-90px;"></div>
+    <div class="hero-deco-circle bold" style="width:84px;height:84px;top:64px;right:120px;"></div>
+    <div class="hero-deco-dot" style="width:16px;height:16px;top:180px;right:40px;"></div>
+    <div class="hero-deco-circle" style="width:140px;height:140px;bottom:20px;left:-50px;"></div>
+    <div class="hero-deco-dot" style="width:10px;height:10px;bottom:120px;left:60px;"></div>
+    <svg class="hero-deco-plus" style="width:22px;height:22px;bottom:200px;right:-4px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+    <div class="hero-text">
+      <p class="eyebrow reveal">Welcome</p>
+      <h1 data-split>Bui Manh Hieu</h1>
+      <p class="lead reveal">B2B Marketing Executive turning enterprise software launches into pipeline through account-based marketing and demand generation &mdash; based in Hanoi, Vietnam.</p>
+      <p class="hero-bio reveal">I'm curious and hands-on about everything marketing - from account-based campaigns to the AI tools reshaping how teams work. I learn by doing - experimenting with new AI tools, writing about how organizations put them to work, and staying close to what's changing in the field. Always open to a new challenge, and always up for a good conversation about marketing and where AI is taking it next.</p>
+      <div class="btn-row reveal">
+        <a class="btn btn-primary" href="#experience">View Experience</a>
+        <a class="btn btn-outline" href="#contact">Get in Touch</a>
+      </div>
+    </div>
+    <div class="hero-photo-wrap reveal">
+      <div class="hero-photo-deco"></div>
+      <div class="hero-photo">
+        <img src="Home/profile-photo.jpeg" alt="Bui Manh Hieu">
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="about">
+    <p class="eyebrow reveal">About Me</p>
+    <h2 data-split>Turning enterprise campaigns into pipeline.</h2>
+    <p class="lead-text reveal">B2B Marketing Executive with hands-on experience across account-based marketing, enterprise event marketing, and marketing operations for enterprise software. Skilled at moving from account research and ICP definition to targeted campaign execution, sales enablement content, and CRM-driven reporting for enterprise accounts.</p>
+    <div class="stat-strip">
+      <div class="stat reveal"><div class="stat-num">+20%</div><div class="stat-label">Leads from ABM outreach</div></div>
+      <div class="stat reveal"><div class="stat-num">+12-15%</div><div class="stat-label">Campaign engagement</div></div>
+      <div class="stat reveal"><div class="stat-num">-10-20%</div><div class="stat-label">Cost-per-lead (paid)</div></div>
+      <div class="stat reveal"><div class="stat-num">+16%</div><div class="stat-label">Sales pipeline (CMC TS)</div></div>
+    </div>
+  </section>
+
+  <section class="section" id="skills">
+    <p class="eyebrow reveal">Skills</p>
+    <h2 data-split>What I bring to a marketing team.</h2>
+    <div class="accordion reveal">
+      <div class="acc-item">
+        <button class="acc-trigger" aria-expanded="true" aria-controls="acc-panel-1">
+          Core Marketing Competencies
+          <svg class="acc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+        </button>
+        <div class="acc-panel" id="acc-panel-1">
+          <div class="acc-panel-inner">
+            <div class="pill-group">
+              <span class="pill">Account-Based Marketing &amp; Account Segmentation</span>
+              <span class="pill">CRM &amp; Marketing Operations</span>
+              <span class="pill">Enterprise Event &amp; Field Marketing</span>
+              <span class="pill">Market &amp; Account Research</span>
+              <span class="pill">Sales Enablement Content</span>
+              <span class="pill">AI-Assisted Workflow Optimization</span>
+              <span class="pill">Vendor &amp; Budget Management</span>
+              <span class="pill">Post-Event Reporting</span>
+              <span class="pill">Content Writing &amp; SEO</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-trigger" aria-expanded="false" aria-controls="acc-panel-2">
+          Soft Skills
+          <svg class="acc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+        </button>
+        <div class="acc-panel" id="acc-panel-2">
+          <div class="acc-panel-inner">
+            <div class="pill-group">
+              <span class="pill">Team Leadership</span>
+              <span class="pill">Cross-Functional Collaboration</span>
+              <span class="pill">Stakeholder Communication</span>
+              <span class="pill">Client Relationship Management</span>
+              <span class="pill">Agile/Scrum Teamwork</span>
+              <span class="pill">Bilingual Communication (EN/VN)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-trigger" aria-expanded="false" aria-controls="acc-panel-3">
+          Tools &amp; Platforms
+          <svg class="acc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+        </button>
+        <div class="acc-panel" id="acc-panel-3">
+          <div class="acc-panel-inner">
+            <div class="acc-group">
+              <div class="acc-group-label">CRM &amp; Marketing Ops</div>
+              <div class="acc-group-items">Salesforce (CRM lead management), Google Forms, Plausible</div>
+            </div>
+            <div class="acc-group">
+              <div class="acc-group-label">Productivity &amp; Design</div>
+              <div class="acc-group-items">Google Workspace &amp; MS Office, Canva, Figma</div>
+            </div>
+            <div class="acc-group">
+              <div class="acc-group-label">Agile &amp; Project Management</div>
+              <div class="acc-group-items">Jira, Confluence, Trello</div>
+            </div>
+            <div class="acc-group">
+              <div class="acc-group-label">Analytics &amp; Reporting</div>
+              <div class="acc-group-items">Power BI</div>
+            </div>
+            <div class="acc-group">
+              <div class="acc-group-label">Content &amp; CMS</div>
+              <div class="acc-group-items">WordPress, Strapi</div>
+            </div>
+            <div class="acc-group">
+              <div class="acc-group-label">AI Tools</div>
+              <div class="acc-group-items">ChatGPT, Claude, Gemini</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="skill-block reveal">
+      <h3>Languages</h3>
+      <div class="pill-group">
+        <span class="pill">Vietnamese - Native</span>
+        <span class="pill">English - Proficient</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="highlights">
+    <p class="eyebrow reveal">What I've Done</p>
+    <h2 data-split>Key highlights across the funnel.</h2>
+    <div class="highlight-grid">
+      <div class="highlight-card reveal">
+        <div class="highlight-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg>
+        </div>
+        <h3>Account-Based Marketing</h3>
+        <ul>
+          <li>Built and executed an ABM campaign for Teamwork Collection - ICP definition, account segmentation, personalized outreach</li>
+          <li>Contributed to <b>+20%</b> outreach-driven leads from priority enterprise accounts</li>
+        </ul>
+      </div>
+      <div class="highlight-card reveal">
+        <div class="highlight-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>
+        </div>
+        <h3>Demand Generation &amp; Paid Media</h3>
+        <ul>
+          <li>Managed and optimized paid campaigns across Google, Facebook, and LinkedIn</li>
+          <li>Reduced cost-per-lead (CPL) by <b>~10-20%</b></li>
+        </ul>
+      </div>
+      <div class="highlight-card reveal">
+        <div class="highlight-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>
+        </div>
+        <h3>Event &amp; Field Marketing</h3>
+        <ul>
+          <li>Organized AI in Action, a flagship event with <b>500+ attendees</b> across Hanoi and Ho Chi Minh City</li>
+          <li>Supported enterprise roadshows connecting field marketing with ABM engagement</li>
+        </ul>
+      </div>
+      <div class="highlight-card reveal">
+        <div class="highlight-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg>
+        </div>
+        <h3>CRM &amp; Marketing Operations</h3>
+        <ul>
+          <li>Designed and maintained a part of the team's lead management structure in Salesforce CRM</li>
+          <li>Standardized CRM lead data and tracking workflows across ABM campaigns</li>
+        </ul>
+      </div>
+      <div class="highlight-card reveal">
+        <div class="highlight-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+        </div>
+        <h3>Content &amp; Sales Enablement</h3>
+        <ul>
+          <li>Led GTM content for an AI adoption training product, contributing to a <b>12-15%</b> lift in campaign engagement</li>
+          <li>Prepared client reports, pitch decks, and proposal materials at CMC TS</li>
+        </ul>
+      </div>
+      <div class="highlight-card reveal">
+        <div class="highlight-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <h3>Account Management</h3>
+        <ul>
+          <li>Managed a portfolio of key client accounts as primary point of contact at CMC TS</li>
+          <li>Client and market analysis contributing to a <b>+16%</b> increase in sales pipeline</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="media-events">
+    <p class="eyebrow reveal">Media &amp; Events</p>
+    <h2 data-split>AI in Action - from hype to real business outcome.</h2>
+    <p class="lead-text reveal">Organized AI in Action, a flagship AI-powered System of Work event for Atlassian's solutions held by Biplus, an Atlassian partner in Vietnam - 500+ attendees across Hanoi and Ho Chi Minh City.</p>
+    <div class="event-gallery">
+      <a class="event-photo reveal" href="Home/ai-in-action-stage.jpg" target="_blank" rel="noopener">
+        <img src="Home/ai-in-action-stage.jpg" alt="AI in Action - stage presentation">
+      </a>
+      <a class="event-photo reveal" href="Home/ai-in-action-booth.jpg" target="_blank" rel="noopener">
+        <img src="Home/ai-in-action-booth.jpg" alt="AI in Action - AI for Marketing booth demo">
+      </a>
+      <a class="event-photo reveal" href="Home/ai-in-action-group-photo.jpg" target="_blank" rel="noopener">
+        <img src="Home/ai-in-action-group-photo.jpg" alt="AI in Action - organizing team group photo">
+      </a>
+    </div>
+  </section>
+
+  <section class="section" id="experience">
+    <p class="eyebrow reveal">Experience</p>
+    <h2 data-split>Where I've worked.</h2>
+    <div class="timeline">
+      <div class="tl-item reveal">
+        <div class="tl-head">
+          <div class="tl-role">
+            <img class="tl-logo" src="https://img.shgstatic.com/clutch-static-prod/image/scale/100x100/s3fs-public/logos/4fe45c907d52fa5265609d78f22f1277.png" alt="Biplus logo">
+            Marketing Executive (Strategic Marketing)
+          </div>
+          <div class="tl-date">May 2025 - Jul 2026</div>
+        </div>
+        <div class="tl-company">Biplus Vietnam Software Solution JSC</div>
+        <ul class="tl-list">
+          <li>Built and executed an account-based marketing campaign for Teamwork Collection (enterprise collaboration software) - ICP definition, account segmentation, personalized outreach, and sales enablement content for priority enterprise accounts, contributing to a ~20% increase in outreach-driven leads.</li>
+          <li>Led go-to-market execution for an AI adoption training product, developing campaign messaging, landing page content, and webinar materials for enterprise audiences, contributing to a 12-15% lift in digital campaign engagement; handled on-page SEO and emerging AEO practices for the product landing page.</li>
+          <li>Organized AI in Action, a flagship AI-powered System of Work event for Atlassian's solutions held by an Atlassian partner in Vietnam (500+ attendees across Hanoi and Ho Chi Minh City) - event planning, registration workflows, content preparation, solution-track/booth coordination, and post-event follow-up.</li>
+          <li>Managed and optimized paid demand-generation campaigns across Google, Facebook, and LinkedIn, reducing cost-per-lead (CPL) by ~10-20%.</li>
+          <li>Designed and maintained a part of the team's lead management structure within Salesforce CRM, and standardized CRM lead data and tracking workflows to support more reliable segmentation and reporting.</li>
+          <li>Applied AI tools to streamline campaign content production and internal workflows - AI-assisted drafting, prompt design, and workflow documentation.</li>
+        </ul>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-head">
+          <div class="tl-role">
+            <img class="tl-logo" src="https://cmcts.com.vn/media/data/logo_v3.png" alt="CMC TS logo">
+            Account Manager
+          </div>
+          <div class="tl-date">Nov 2024 - Mar 2025</div>
+        </div>
+        <div class="tl-company">CMC TS</div>
+        <ul class="tl-list">
+          <li>Managed a portfolio of key client accounts, serving as the primary point of contact throughout the sales and delivery cycle.</li>
+          <li>Translated complex technical concepts into clear business value propositions for non-technical stakeholders.</li>
+          <li>Analyzed client needs and market dynamics to inform strategic account planning, contributing to a 16% increase in sales pipeline.</li>
+          <li>Prepared client reports, pitch decks, and proposal materials to support high-value partnerships.</li>
+        </ul>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-head">
+          <div class="tl-role">
+            <img class="tl-logo" src="https://logos-world.net/wp-content/uploads/2025/11/ENI-Logo-500x281.png" alt="Eni Vietnam logo">
+            CCUSFA Initiatives Project Coordinator
+          </div>
+          <div class="tl-date">Jun 2024 - Oct 2024</div>
+        </div>
+        <div class="tl-company">Eni Vietnam</div>
+        <ul class="tl-list">
+          <li>Coordinated a cross-functional team of 7 engineers, researchers, and local partners.</li>
+          <li>Planned and executed on-site project activation, overseeing timelines, budgets, and risk assessments to ensure on-time and within-budget delivery.</li>
+          <li>Designed communication materials and weekly visual reports to ensure clear stakeholder alignment with executive leadership and government agencies.</li>
+        </ul>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-head">
+          <div class="tl-role">Human Resource Manager</div>
+          <div class="tl-date">Feb 2022 - Feb 2023</div>
+        </div>
+        <div class="tl-company">RMIT Vietnam Green Generation Club</div>
+        <ul class="tl-list">
+          <li>Led a 20-person HR team organizing workshops and team-building activities for a 110-member organization, achieving 91% member retention.</li>
+        </ul>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-head">
+          <div class="tl-role">Logistics Leader - Award Night</div>
+          <div class="tl-date">Oct 2021 - Jan 2022</div>
+        </div>
+        <div class="tl-company">RMIT Vietnam Green Generation Club</div>
+        <ul class="tl-list">
+          <li>Led a 6-person logistics team handling supplier negotiations, budgeting, venue setup, equipment coordination, and on-site operations for the club's year-end event.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="education">
+    <p class="eyebrow reveal">Education</p>
+    <h2 data-split>Academic background.</h2>
+    <div class="edu-card reveal">
+      <h3>RMIT Vietnam University</h3>
+      <p class="edu-meta">Bachelor of Digital Business - Minor: Logistics &amp; Supply Chain Management · 2020-2024 · GPA 2.8</p>
+      <div class="doc-row">
+        <a class="doc-btn" href="Home/RMIT-Testamur.pdf" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M12 18v-6M9 15l3 3 3-3"/></svg>
+          View Diploma (PDF)
+        </a>
+        <a class="doc-btn" href="Home/RMIT-Transcript.pdf" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M12 18v-6M9 15l3 3 3-3"/></svg>
+          View Transcript (PDF)
+        </a>
+      </div>
+      <div class="academic-note">
+        <strong>RescueBites Startup</strong> (Jun 2023) - Design Thinking and the Digital Startup Project, RMIT Vietnam University. Led a 5-person team through a full design sprint from problem framing to final pitch, including user personas, wireframes, and a prototype - reached Top 4.
+      </div>
+    </div>
+  </section>
+
+  <section class="footer-section" id="contact">
+    <p class="eyebrow reveal">Get in Touch</p>
+    <h2 data-split>Let's grab a coffee and talk shop.</h2>
+    <div class="contact-grid">
+      <a class="contact-row reveal" href="mailto:hieubm1609@gmail.com">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M4 6l8 7 8-7"/></svg>
+        hieubm1609@gmail.com
+      </a>
+      <a class="contact-row reveal" href="tel:+840918160902">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.7a2 2 0 0 1-.4 2.1L8 9.9a16 16 0 0 0 6 6l1.4-1.2a2 2 0 0 1 2.1-.4c.9.3 1.8.5 2.7.6a2 2 0 0 1 1.8 2z"/></svg>
+        (+84) 0918 160 902
+      </a>
+      <a class="contact-row reveal" href="https://linkedin.com/in/hieu-bui1609" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/><path d="M10 9v12M10 13a4 4 0 0 1 8 0v8"/></svg>
+        linkedin.com/in/hieu-bui1609
+      </a>
+    </div>
+    <p class="copyright">© 2026 Bui Manh Hieu. Hanoi, Vietnam.</p>
+  </section>
+
+</main>
+
+<script>
+  window.addEventListener('load',function(){
+    var curtain=document.querySelector('.curtain');
+    setTimeout(function(){
+      curtain.classList.add('hide');
+      curtain.addEventListener('transitionend',function(){curtain.style.display='none';},{once:true});
+    },200);
+  });
+
+  (function(){
+    if(window.matchMedia('(pointer:coarse)').matches) return;
+    var dot=document.querySelector('.cursor-dot');
+    var ring=document.querySelector('.cursor-ring');
+    var mx=0,my=0,rx=0,ry=0;
+    window.addEventListener('mousemove',function(e){
+      mx=e.clientX; my=e.clientY;
+      dot.style.transform='translate('+mx+'px,'+my+'px) translate(-50%,-50%)';
+    });
+    function loop(){
+      rx+=(mx-rx)*0.15; ry+=(my-ry)*0.15;
+      ring.style.transform='translate('+rx+'px,'+ry+'px) translate(-50%,-50%)';
+      requestAnimationFrame(loop);
+    }
+    loop();
+    document.querySelectorAll('a,button').forEach(function(el){
+      el.addEventListener('mouseenter',function(){ring.classList.add('active');});
+      el.addEventListener('mouseleave',function(){ring.classList.remove('active');});
+    });
+  })();
+
+  document.querySelectorAll('[data-split]').forEach(function(el){
+    var text=el.textContent;
+    el.textContent='';
+    text.split(' ').forEach(function(word,i){
+      var wrap=document.createElement('span');
+      wrap.className='word-wrap';
+      var span=document.createElement('span');
+      span.className='word';
+      span.textContent=word;
+      span.style.transitionDelay=(i*0.05)+'s';
+      wrap.appendChild(span);
+      el.appendChild(wrap);
+      el.appendChild(document.createTextNode(' '));
+    });
+  });
+  var wordObserver=new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        entry.target.querySelectorAll('.word').forEach(function(w){w.classList.add('seen');});
+        wordObserver.unobserve(entry.target);
+      }
+    });
+  },{threshold:0.4});
+  document.querySelectorAll('[data-split]').forEach(function(el){wordObserver.observe(el);});
+
+  var revealObserver=new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        entry.target.classList.add('seen');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  },{threshold:0.15});
+  document.querySelectorAll('.reveal').forEach(function(el,i){
+    el.style.transitionDelay=((i%4)*0.08)+'s';
+    revealObserver.observe(el);
+  });
+
+  var menuToggle=document.querySelector('.menu-toggle');
+  var sidebarPanel=document.querySelector('.sidebar-panel');
+  if(menuToggle){
+    menuToggle.addEventListener('click',function(){
+      sidebarPanel.classList.toggle('open');
+      menuToggle.classList.toggle('open');
+    });
+  }
+
+  document.querySelectorAll('.acc-trigger').forEach(function(btn){
+    var panel=document.getElementById(btn.getAttribute('aria-controls'));
+    if(btn.getAttribute('aria-expanded')==='true'){
+      panel.style.maxHeight=panel.scrollHeight+'px';
+    }
+    btn.addEventListener('click',function(){
+      var expanded=btn.getAttribute('aria-expanded')==='true';
+      btn.setAttribute('aria-expanded', String(!expanded));
+      panel.style.maxHeight=expanded ? '0px' : panel.scrollHeight+'px';
+    });
+  });
+</script>
+</body>
+</html>
